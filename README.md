@@ -1,70 +1,107 @@
-# Getting Started with Create React App
+# 🎓 Student Guide
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack web app that helps Indian students choose a study path. Browse course information by education level, get personalised course suggestions from an interests form, and ask an AI chatbot any question.
 
-## Available Scripts
+**Stack:** React 18 · React Router 6 · Bootstrap 5 · Node.js · Express · MongoDB (Mongoose) · Google Gemini API
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## ✨ Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+| Feature | What it does |
+|---|---|
+| **Auth** | Sign up / log in with username or email. Passwords hashed with bcrypt. |
+| **Course explorer** | Info pages for Class 5–10, PUC, UG Courses, Engineering, Medical, BCA, Diploma and Competitive Exams. |
+| **Interest-based suggestions** | Pick strongest subjects, interests, passions, hobbies (plus elective, discipline and skills for higher levels) and get matching course/career suggestions from MongoDB. |
+| **AI chatbot** | Short, expert-style answers to any doubt, powered by Gemini, with conversation history. |
+| **Help page** | Usage help for the app. |
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 🗂️ Project Structure
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+student-guide/
+├── package.json            # Frontend (Create React App) dependencies & scripts
+├── index.js                # Legacy entry file (CRA uses src/index.js)
+├── public
+├── src/
+│   ├── index.js            # React entry point
+│   ├── App.js              # Routes + login state (persisted in localStorage)
+│   └── project/            # All pages & components
+│       ├── LogIn.js, SignUp.js
+│       ├── Home.js, Navbar.js, Help.js
+│       ├── Class510.js, PUC.js, Diploma.js, UgCourses.js
+│       ├── Engineering.js, Medical.js, Bca.js, CompetitiveExams.js
+│       ├── Interests.js                 # Interests form (level selector)
+│       ├── I_class5_10.js, I_pu.js, I_diploma_ug.js   # Level-specific forms
+│       ├── Chatbot.js                   # Chat UI
+│       └── *.css, *.jpg                 # Styles & carousel images
+└── server/                # Backend API
+    ├── server.js           # Express app, MongoDB connection, route mounting
+    ├── package.json
+    ├── routes/
+    │   ├── auth.js         # /auth/signup, /auth/signin
+    │   ├── formRoutes.js   # /form/get-suggestions
+    │   └── chatBot.js      # /chatBot  (Gemini)
+    └── models/             # Mongoose models
+        ├── User.js         # collection: login_details
+        ├── StrongestSubject.js  Passion.js  Hobbies.js
+        ├── InterestSubject.js   Skills.js
+        └── Electives.js         Discipline.js
+```
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## ✅ Prerequisites
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Node.js** 18+ and npm
+- **MongoDB** running locally on `mongodb://localhost:27017`
+- A **Google Gemini API key** ([get one here](https://aistudio.google.com/app/apikey))
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## 🚀 Getting Started
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 1. Install dependencies
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+# Frontend (from project root)
+npm install
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# Backend
+cd server
+npm install
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 2. Configure environment
 
-## Learn More
+Create `server/.env`:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```env
+GEMINI_API_KEY=your_gemini_api_key_here
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+> `.env` is git-ignored — never commit your key.
 
-### Code Splitting
+### 3. Start MongoDB
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Make sure `mongod` is running. The app uses the database **`StudentGuide`** (created automatically).
 
-### Analyzing the Bundle Size
+### 4. Run the backend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```bash
+cd server
+npm start
+# 🚀 Server running at http://localhost:5000
+```
 
-### Making a Progressive Web App
+### 5. Run the frontend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```bash
+# from project root
+npm start
+# opens http://localhost:3000
+```
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
